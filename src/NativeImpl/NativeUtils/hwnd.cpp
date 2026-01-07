@@ -303,8 +303,11 @@ DECLARE_API void OpenFileEx(LPCWSTR file)
         ShellExecuteW(NULL, L"open", file, NULL, NULL, SW_SHOWNORMAL);
     }
 }
-__declspec(dllexport) std::optional<WORD> MyGetBinaryType(LPCWSTR file)
+
+std::optional<WORD> MyGetBinaryType(LPCWSTR file)
 {
+    if (!file)
+        return {};
     CHandle hFile{CreateFileW(file, GENERIC_READ, FILE_SHARE_READ, 0,
                               OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0)};
     if (!hFile)
@@ -335,12 +338,58 @@ __declspec(dllexport) std::optional<WORD> MyGetBinaryType(LPCWSTR file)
     return type;
 }
 
+#ifndef IMAGE_FILE_MACHINE_ARM64
+#define IMAGE_FILE_MACHINE_ARM64 0xAA64 // ARM64 Little-Endian
+#endif
+
+SHAREFUNCTION std::optional<std::wstring> SearchDllPath(const std::wstring &dll)
+{
+    auto len = SearchPathW(NULL, dll.c_str(), NULL, 0, NULL, NULL);
+    if (!len)
+        return {};
+    std::wstring buff;
+    buff.resize(len);
+    len = SearchPathW(NULL, dll.c_str(), NULL, len, buff.data(), NULL);
+    if (!len)
+        return {};
+    auto type = MyGetBinaryType(buff.c_str());
+    if (!type)
+        return {};
+    if constexpr (sizeof(size_t) == 8)
+        if (type.value() == IMAGE_FILE_MACHINE_ARM64)
+            return {};
+    return buff;
+}
+
+DECLARE_API void SearchDllPath(LPCWSTR file, void (*cb)(LPCWSTR))
+{
+    if (auto _ = SearchDllPath(file))
+    {
+        cb(_.value().c_str());
+    }
+}
+
 DECLARE_API bool IsDLLBit64(LPCWSTR file)
 {
+    if (!file)
+        return false;
     auto type = MyGetBinaryType(file);
     if (!type)
         return false;
     return type.value() == IMAGE_FILE_MACHINE_AMD64;
+}
+
+DECLARE_API bool IsDLLBitSameAsMe(LPCWSTR file)
+{
+    if (!file)
+        return false;
+    auto type = MyGetBinaryType(file);
+    if (!type)
+        return false;
+    if constexpr (sizeof(size_t) == 8)
+        return type.value() == IMAGE_FILE_MACHINE_AMD64;
+    else
+        return type.value() == IMAGE_FILE_MACHINE_I386;
 }
 
 typedef struct

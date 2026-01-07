@@ -6,7 +6,6 @@
 #else
 #include "../xpundef/xp_dxgi.h"
 #include "../xpundef/xp_d3d12.h"
-#define IMAGE_FILE_MACHINE_ARM64 0xAA64 // ARM64 Little-Endian
 #endif
 #include "shared.hpp"
 
@@ -107,23 +106,7 @@ DECLARE_API void OcrDestroy(OcrLite *pOcrObj)
     if (pOcrObj)
         delete pOcrObj;
 }
-static std::optional<std::wstring> SearchDllPath(const std::wstring &dll)
-{
-    auto len = SearchPathW(NULL, dll.c_str(), NULL, 0, NULL, NULL);
-    if (!len)
-        return {};
-    std::wstring buff;
-    buff.resize(len);
-    len = SearchPathW(NULL, dll.c_str(), NULL, len, buff.data(), NULL);
-    if (!len)
-        return {};
-    auto type = MyGetBinaryType(buff.c_str());
-    if (!type)
-        return {};
-    if (type.value() == IMAGE_FILE_MACHINE_ARM64)
-        return {};
-    return buff;
-}
+
 static std::optional<version_t> __QueryVersion(const std::wstring &exe)
 {
     auto _ = QueryVersion(exe);
