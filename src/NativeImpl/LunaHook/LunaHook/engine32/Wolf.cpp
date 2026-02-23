@@ -1089,6 +1089,34 @@ namespace
     return NewHook(hp, "wolf9");
   }
 }
+static bool wolf10()
+{
+  // マネジメント
+  // 会重复，需要luna内使用去重。如果有更好的不要这个。
+  BYTE sig[] = {
+      0x81, 0xfe, 0x00, 0x04, 0x00, 0x00,
+      0x7e, XX,
+      0x68, 0xaf, 0x06, 0x00, 0x00,
+      0x8d, 0x04, 0xf5, 0x00, 0x00, 0x00, 0x00,
+      0x68, XX4,
+      0x50,
+      0xc7, XX, XX, XX, 0x01, 0x00, 0x00, 0x00,
+      0xe8, XX4};
+  auto addr = MemDbg::findBytes(sig, sizeof(sig), processStartAddress, processStopAddress);
+  if (!addr)
+    return false;
+  addr = MemDbg::findEnclosingAlignedFunction(addr, 0x80);
+  HookParam hp;
+  hp.address = addr;
+  hp.type = USING_STRING | CODEC_UTF16;
+  hp.text_fun = [](hook_context *s, HookParam *hp, TextBuffer *buffer, uintptr_t *role)
+  {
+    if (s->stack[6] != 2)
+      return;
+    buffer->from((WCHAR *)s->ecx);
+  };
+  return NewHook(hp, "wolf10");
+}
 bool Wolf::attach_function()
 {
   bool succ = false;
@@ -1098,6 +1126,7 @@ bool Wolf::attach_function()
 
   succ |= GuruGuruSMF4::h1();
   succ = succ || w9() || wolf8();
+  succ |= wolf10();
   PcHooks::hookGDIFunctions();
   // 奈落の森の花
   trigger_fun = [](LPVOID addr1, hook_context *context)
@@ -1111,9 +1140,7 @@ bool Wolf::attach_function()
     if (xrefs.size() != 1)
       return true;
     addr = xrefs[0];
-    ConsoleOutput("%p", addr);
     addr = MemDbg::findEnclosingAlignedFunction(addr);
-    ConsoleOutput("%p", addr);
     if (!addr)
       return true;
     auto xrefs2 = findxref_reverse_checkcallop(addr, max(processStartAddress, addr - 0x100000), min(processStopAddress, addr + 0x100000), 0xe8);
