@@ -29,6 +29,7 @@
 #include "engine32/For.h"
 #include "engine32/splushwave.h"
 #include "engine32/GJ.h"
+#include "engine32/ANOS.h"
 #include "engine32/FrontWing.h"
 #include "engine32/TAKUYO.h"
 #include "engine32/GSX.h"
@@ -483,5 +484,6 @@ std::vector<ENGINE *> check_engines()
         new AZScript,
         new GLuer,
         new ZeroEscape,
+        new ANOS,
     };
 }
