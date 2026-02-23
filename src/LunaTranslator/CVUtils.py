@@ -44,7 +44,7 @@ class _unique_ptr(c_void_p):
 class cvMat(c_void_p):
     @staticmethod
     def fromQImage(image: QImage):
-        if image.isNull():
+        if (image is None) or image.isNull() or (image.bits() is None):
             return cvMat(None)
         _CVUtils = _DelayLoadCVUtils()
         cvMatFromRGB888 = _CVUtils.cvMatFromRGB888
