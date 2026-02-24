@@ -139,7 +139,8 @@ struct __datas
         dataqueue.push(std::string{});
         if (start)
         {
-            __parstt.join();
+            if (__parstt.joinable())
+                __parstt.join();
         }
         if (vad)
             fvad_free(vad);
