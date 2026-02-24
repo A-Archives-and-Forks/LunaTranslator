@@ -501,19 +501,6 @@ def getsrgrid(self):
     ]
 
 
-class MDLabel2(LinkLabel):
-    def __init__(self, md):
-        super().__init__()
-        self.setText(md)
-        self.setOpenExternalLinks(False)
-        self.setWordWrap(True)
-        self.linkActivated.connect(self._linkActivated)
-
-    def _linkActivated(self, url: str):
-        link = "http://127.0.0.1:{}{}".format(globalconfig["networktcpport"], url)
-        os.startfile(link)
-
-
 def getftsgrid(self):
     gobject.base.starttranslatefiles.connect(
         lambda res: gobject.base.textsource.starttranslatefiles(res)
@@ -532,10 +519,9 @@ def getftsgrid(self):
 
 
 def getnetgrid(self):
-    fuckyou = lambda _: '<a href="{}">{}</a>'.format(_, _)
     return [
         [
-            "开启",
+            getsmalllabel("开启"),
             getboxlayout(
                 [
                     D_getsimpleswitch(
@@ -543,12 +529,18 @@ def getnetgrid(self):
                         "networktcpenable",
                         callback=lambda _: gobject.base.serviceinit(),
                     ),
-                    0,
+                    D_getIconButton(
+                        icon="fa.chrome",
+                        callback=lambda: os.startfile(
+                            "http://127.0.0.1:{}".format(globalconfig["networktcpport"])
+                        ),
+                        tips="打开",
+                    ),
                 ]
             ),
         ],
         [
-            "端口号",
+            getsmalllabel("端口号"),
             getboxlayout(
                 [
                     D_getspinbox(
@@ -561,27 +553,28 @@ def getnetgrid(self):
                     __portconflict,
                 ]
             ),
+            "",
         ],
-        [
-            (
-                functools.partial(
-                    MDLabel2,
-                    ("&nbsp;" * 4).join(
-                        fuckyou(_)
-                        for _ in (
-                            "/",
-                            "/page/mainui",
-                            "/page/transhist",
-                            "/page/dictionary",
-                            "/page/translate",
-                            "/page/ocr",
-                            "/page/tts",
-                        )
-                    ),
-                ),
-                0,
-            )
-        ],
+        # [
+        #     (
+        #         functools.partial(
+        #             MDLabel2,
+        #             ("&nbsp;" * 4).join(
+        #                 fuckyou(_)
+        #                 for _ in (
+        #                     "/",
+        #                     "/page/mainui",
+        #                     "/page/transhist",
+        #                     "/page/dictionary",
+        #                     "/page/translate",
+        #                     "/page/ocr",
+        #                     "/page/tts",
+        #                 )
+        #             ),
+        #         ),
+        #         0,
+        #     )
+        # ],
     ]
 
 

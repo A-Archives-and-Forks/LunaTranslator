@@ -2,6 +2,10 @@
 
 ## Trang Web
 
+1. #### /
+
+    Trang điều hướng
+
 1. #### /page/mainui
 
     Đồng bộ với nội dung văn bản hiển thị trong cửa sổ chính.
@@ -14,7 +18,7 @@
 
     Trang tra cứu từ. Trang này được kích hoạt khi nhấp vào một từ để tra cứu trong `/page/mainui`.
 
-1. #### /
+1. #### /page/manyinone
 
     Một trang hợp nhất kết hợp ba trang được đề cập ở trên. Khi nhấp vào một từ để tra cứu trong phần `/page/mainui` của cửa sổ này, nó sẽ không mở một cửa sổ tra cứu mới mà thay vào đó hiển thị kết quả trong phần `/page/dictionary` của cửa sổ hiện tại.
 
