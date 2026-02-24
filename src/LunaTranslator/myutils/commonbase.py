@@ -172,7 +172,7 @@ class commonbase(multikeyhelper):
         return globalconfig[self._globalconfig_key].get(self.typename, {})
 
     @property
-    def config(self):
+    def config(self) -> "dict[str, str]":
         try:
             return stripwrapper(self._setting_dict[self.typename]["args"])
         except:
@@ -196,8 +196,10 @@ class commonbase(multikeyhelper):
         # 防报错兼容性留置
         pass
 
-    def checkempty(self, items):
+    def checkempty(self, items: "str|list[str]|tuple[str]"):
         emptys = []
+        if isinstance(items, str):
+            items = (items,)
         for item in items:
             if (self.config[item]) == "":
                 emptys.append(item)
