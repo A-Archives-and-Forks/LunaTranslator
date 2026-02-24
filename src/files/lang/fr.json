@@ -512,7 +512,6 @@
     "葡萄牙语": "Portugais",
     "正在解压": "Décompression en cours",
     "自动更新失败，请手动更新": "La mise à jour automatique a échoué, veuillez la mettre à jour manuellement",
-    "准备完毕，等待更新": "Prêt, en attente de mise à jour",
     "自定义": "Personnalisation",
     "其他参数": "Autres paramètres",
     "继承默认": "Héritage par défaut",
@@ -930,5 +929,7 @@
     "区分大小写": "Sensible à la casse",
     "自动录音": "Enregistrement automatique",
     "更多……": "Plus...",
-    "收藏夹": "Favoris"
+    "收藏夹": "Favoris",
+    "准备完毕，将在退出后更新": "Prêt, mise à jour après la sortie.",
+    "准备完毕，点击消息后退出并开始更新": "Prêt, cliquez sur le message pour quitter et commencer la mise à jour."
 }

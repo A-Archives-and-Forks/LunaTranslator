@@ -512,7 +512,6 @@
     "葡萄牙语": "Portugisiska",
     "正在解压": "Nedtryckning pågår",
     "自动更新失败，请手动更新": "Automatisk uppdatering misslyckades, uppdatera manuellt",
-    "准备完毕，等待更新": "Redo, väntar på uppdateringar",
     "自定义": "anpassad",
     "其他参数": "Andra parametrar",
     "继承默认": "Arv förval",
@@ -930,5 +929,7 @@
     "区分大小写": "Skiftlägeskänslig",
     "自动录音": "Automatisk inspelning",
     "更多……": "Mer...",
-    "收藏夹": "Favoriter"
+    "收藏夹": "Favoriter",
+    "准备完毕，将在退出后更新": "Färdig, uppdateras efter avslut",
+    "准备完毕，点击消息后退出并开始更新": "Redo, klicka på meddelandet för att avsluta och börja uppdatera"
 }

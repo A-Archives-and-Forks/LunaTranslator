@@ -208,9 +208,9 @@ def versioncheckthread():
 
         uncompress(savep)
         gobject.base.update_avalable = True
-        gobject.base.progresssignal4.emit(_TR("准备完毕，等待更新"), 10000)
+        gobject.base.progresssignal4.emit(_TR("准备完毕，将在退出后更新"), 10000)
         gobject.base.showtraymessage(
             sversion,
-            _TR("准备完毕，等待更新") + "\n" + _TR("点击消息后退出并开始更新"),
+            _TR("准备完毕，点击消息后退出并开始更新"),
             gobject.base.triggertoupdate,
         )
