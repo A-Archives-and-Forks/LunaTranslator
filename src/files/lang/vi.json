@@ -512,7 +512,6 @@
     "葡萄牙语": "Bồ Đào Nha",
     "正在解压": "Đang giải nén",
     "自动更新失败，请手动更新": "Cập nhật tự động không thành công, vui lòng cập nhật thủ công",
-    "准备完毕，等待更新": "Sẵn sàng chờ update",
     "自定义": "Tùy chỉnh",
     "其他参数": "Tham số khác",
     "继承默认": "Thừa kế mặc định",
@@ -930,5 +929,7 @@
     "区分大小写": "Phân biệt chữ hoa chữ thường",
     "自动录音": "Ghi âm tự động",
     "更多……": "Thêm nữa...",
-    "收藏夹": "Thư mục yêu thích"
+    "收藏夹": "Thư mục yêu thích",
+    "准备完毕，将在退出后更新": "Sẵn sàng, sẽ cập nhật sau khi thoát",
+    "准备完毕，点击消息后退出并开始更新": "Sẵn sàng, nhấn vào tin nhắn để thoát và bắt đầu cập nhật."
 }

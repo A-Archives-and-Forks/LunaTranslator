@@ -35,7 +35,15 @@ inline std::vector<StringT> strSplit_impl(const StringT &s, const StringT &delim
     tokens.push_back(str);
     return tokens;
 }
-
+void autoexitafter1min()
+{
+    // 1min后强制退出进程。避免卡死
+    std::thread([]()
+                {
+    Sleep(1000 * 60);
+    ExitProcess(0); })
+        .detach();
+}
 int updatewmain(int argc, wchar_t *argv[])
 {
     if (argc <= 1)
@@ -45,6 +53,7 @@ int updatewmain(int argc, wchar_t *argv[])
 
     if (GetLastError() == ERROR_ALREADY_EXISTS)
         return 0;
+    autoexitafter1min();
     auto pid = _wtoi(argv[3]);
     CHandle hProcess{OpenProcess(SYNCHRONIZE, FALSE, pid)};
     if (hProcess)
@@ -126,8 +135,9 @@ int updatewmain(int argc, wchar_t *argv[])
     }
     catch (std::exception &e)
     {
+        return 0;
     }
-    MessageBoxW(NULL, text_update_succ.c_str(), text_succ.c_str(), MB_SYSTEMMODAL);
+    // MessageBoxW(NULL, text_update_succ.c_str(), text_succ.c_str(), MB_SYSTEMMODAL);
     if (needreload)
     {
         ShellExecute(0, L"open", L".\\LunaTranslator.exe", NULL, NULL, SW_SHOWNORMAL);
