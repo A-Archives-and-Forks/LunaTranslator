@@ -220,7 +220,6 @@ class BASEOBJECT(QObject):
         self.gameuid = 0
         self.autoswitchgameuid = True
         self.istriggertoupdate = False
-        self.thishastranslated = True
         self.service = TCPService()
         registerall(self.service)
 
@@ -430,8 +429,7 @@ class BASEOBJECT(QObject):
 
     def maybeneedtranslateshowhidetranslate(self):
         if globalconfig["showfanyi"]:
-            if not self.thishastranslated:
-                self.textgetmethod(self.currenttext_raw, is_auto_run=False)
+            self.textgetmethod(self.currenttext_raw, is_auto_run=False, isRefresh=True)
             self.translation_ui.translate_text.showhidetranslate(True)
         else:
             self.translation_ui.translate_text.showhidetranslate(False)
@@ -454,6 +452,7 @@ class BASEOBJECT(QObject):
         updateTranslate=False,
         isFromHook=False,
         statusok=True,
+        isRefresh=False,
     ):
         with self.solvegottextlock:
             succ = self.textgetmethod_1(
@@ -466,6 +465,7 @@ class BASEOBJECT(QObject):
                 updateTranslate=updateTranslate,
                 isFromHook=isFromHook,
                 statusok=statusok,
+                isRefresh=isRefresh,
             )
             if waitforresultcallback and not succ:
                 waitforresultcallback(TranslateResult())
@@ -490,6 +490,7 @@ class BASEOBJECT(QObject):
         updateTranslate=False,
         isFromHook=False,
         statusok=True,
+        isRefresh=False,
     ):
         if not text:
             return
@@ -523,31 +524,31 @@ class BASEOBJECT(QObject):
                 text = text[: globalconfig["maxlength"]] + "……"
 
             self.translation_ui.displayraw1.emit(text, updateTranslate, is_auto_run)
-            if statusok:
+            if statusok and not isRefresh:
                 self.transhis.getnewsentencesignal.emit(text)
             self.maybesetedittext(text)
             return
 
         _showrawfunction_unsafe = None
         if not waitforresultcallback:
-            self.currenttext = text
-            self.currenttext_raw = origin
-            self.statusok = statusok
-            self.currenttranslate = ""
-            self.currenttranslate_1 = ""
-            self.latest_is_origin = True
-            if globalconfig["read_raw"]:
-                self.readcurrent()
-            self.dispatchoutputer(text, True)
+            if not isRefresh:
+                self.currenttext = text
+                self.currenttext_raw = origin
+                self.statusok = statusok
+                self.currenttranslate = ""
+                self.currenttranslate_1 = ""
+                self.latest_is_origin = True
+                if globalconfig["read_raw"]:
+                    self.readcurrent()
+                self.dispatchoutputer(text, True)
 
             _showrawfunction_unsafe = functools.partial(
                 self.translation_ui.displayraw1.emit, text, updateTranslate, is_auto_run
             )
-            self.thishastranslated = globalconfig["showfanyi"]
         _showrawfunction = lambda: (
             _showrawfunction_unsafe() if _showrawfunction_unsafe else None
         )
-        if statusok:
+        if statusok and not isRefresh:
             self.transhis.getnewsentencesignal.emit(text)
             try:
                 self.textsource.sqlqueueput((text, origin))
@@ -648,6 +649,7 @@ class BASEOBJECT(QObject):
                 read_trans_once_check=read_trans_once_check,
                 erroroutput=erroroutput,
                 statusok=statusok,
+                isRefresh=isRefresh,
             )
         return True
 
@@ -690,6 +692,7 @@ class BASEOBJECT(QObject):
         read_trans_once_check: list,
         erroroutput,
         statusok=True,
+        isRefresh=False,
     ):
         callback = partial(
             self.GetTranslationCallback,
@@ -704,6 +707,7 @@ class BASEOBJECT(QObject):
             erroroutput,
             statusok=statusok,
             is_auto_run=is_auto_run,
+            isRefresh=isRefresh,
         )
         task = (
             callback,
@@ -749,6 +753,7 @@ class BASEOBJECT(QObject):
         iserror=False,
         statusok=True,
         is_auto_run=True,
+        isRefresh=False,
     ):
         with self.gettranslatelock:
             if classname in usefultranslators:
@@ -794,7 +799,7 @@ class BASEOBJECT(QObject):
                 self.translation_ui.displayres.emit(displayreskwargs)
             if iter_res_status in (0, 2):  # 0为普通，1为iter，2为iter终止
 
-                if statusok:
+                if statusok and not isRefresh:
                     self.transhis.getnewtranssignal.emit(
                         _TR(dynamicapiname(classname)), res
                     )
@@ -858,7 +863,9 @@ class BASEOBJECT(QObject):
         return checkmd5reloadmodule(path1, "posts." + path).POSTSOLVE(text)
 
     def ttsrepair(self, text, usedict: dict):
-        if usedict.get("tts_repair", globalconfig["ttscommon"].get("tts_repair", False)):
+        if usedict.get(
+            "tts_repair", globalconfig["ttscommon"].get("tts_repair", False)
+        ):
             if usedict.get("ttsprocess_use", False):
                 try:
                     text = self.ttsprocess(usedict.get("ttsprocess_path"), text)

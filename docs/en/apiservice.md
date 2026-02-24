@@ -2,6 +2,10 @@
 
 ## Web Pages
 
+1. #### /
+
+    Navigation Page
+
 1. #### /page/mainui
 
     Synchronizes with the text content displayed in the main window.
@@ -14,7 +18,7 @@
 
     Word lookup page. This page is triggered when clicking a word for lookup in `/page/mainui`.
 
-1. #### /
+1. #### /page/manyinone
 
     A consolidated page combining the three pages mentioned above. When clicking a word for lookup in the `/page/mainui` sub-section of this window, it will not open a new lookup window but will instead display the results in the `/page/dictionary` sub-section of the current window.
 

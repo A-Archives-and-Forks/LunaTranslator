@@ -309,11 +309,17 @@ class TextOutputTrans(WSHandler):
         wsoutputsave.append(self)
 
 
-class BasePage(HTTPHandler):
+class PageManyInOne(HTTPHandler):
+    path = "/page/manyinone"
+
+    def parse(self, _):
+        return FileResponse(r"LunaTranslator\htmlcode\service\manyinone.html")
+
+class PageIndex(HTTPHandler):
     path = "/"
 
     def parse(self, _):
-        return FileResponse(r"LunaTranslator\htmlcode\service\basepage.html")
+        return FileResponse(r"LunaTranslator\htmlcode\service\index.html")
 
 
 class TextInput(HTTPHandler):
@@ -332,7 +338,8 @@ def registerall(service: TCPService):
     service.register(APItts)
     service.register(APIocr)
     service.register(APITranslate)
-    service.register(BasePage)
+    service.register(PageIndex)
+    service.register(PageManyInOne)
     service.register(PageSearchWord)
     service.register(Pagetranslate)
     service.register(Pageocr)

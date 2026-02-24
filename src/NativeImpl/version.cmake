@@ -12,7 +12,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/version/generate_product_version.cmake)
 generate_product_version(
 	versioninfo
    NAME "LunaTranslator"
-   COMPANY_COPYRIGHT "HIllya51 (C) 2025"
+   COMPANY_COPYRIGHT "HIllya51 (C) 2026"
    ICON ${PATH_TO_APPLICATION_ICON}
    VERSION_MAJOR ${VERSION_MAJOR}
    VERSION_MINOR ${VERSION_MINOR}
