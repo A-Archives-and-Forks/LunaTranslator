@@ -540,15 +540,16 @@ class TranslatorWindow(resizableframeless):
             if clear:
                 self.translate_text.clear()
             return
-        if not is_auto_run:
-            if not gobject.base.transhis.isVisible():
-                self.show_()
-        if not raw:
-            text = self.cleartext(text)
         if iter_context:
             iter_res_status, iter_context_class = iter_context
         else:
             iter_res_status = 0
+        if (not iter_res_status) and (not is_auto_run):
+            # 流式输出时，不要每次都触发。
+            if not gobject.base.transhis.isVisible():
+                self.show_()
+        if not raw:
+            text = self.cleartext(text)
         if iter_res_status:
             self.translate_text.iter_append(
                 clear, iter_context_class, texttype, name, text, color, klass
