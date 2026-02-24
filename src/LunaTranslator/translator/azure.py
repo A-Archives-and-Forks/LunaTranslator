@@ -8,7 +8,7 @@ class TS(basetrans):
         return {Languages.TradChinese: "zh-Hant", Languages.Chinese: "zh-Hans"}
 
     def translate(self, query):
-        self.checkempty(["key1"])
+        self.checkempty("key1")
 
         # Add your key and endpoint
         key = self.multiapikeycurrent["key1"]

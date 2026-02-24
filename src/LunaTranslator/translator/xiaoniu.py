@@ -4,7 +4,7 @@ from translator.basetranslator import basetrans
 class TS(basetrans):
 
     def translate(self, query):
-        self.checkempty(["apikey"])
+        self.checkempty("apikey")
 
         apikey = self.multiapikeycurrent["apikey"]
 

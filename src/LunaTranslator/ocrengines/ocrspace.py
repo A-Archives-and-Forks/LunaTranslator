@@ -23,7 +23,7 @@ class OCR(baseocr):
         }
 
     def ocr(self, imagebinary):
-        self.checkempty(["apikey"])
+        self.checkempty("apikey")
         self.raise_cant_be_auto_lang()
         apikey = self.multiapikeycurrent["apikey"]
         if self.config["interface"] == 1:

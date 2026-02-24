@@ -9,7 +9,7 @@ class OCR(baseocr):
         fname = gobject.gettempdir(str(uuid.uuid4()) + ".png")
         with open(fname, "wb") as ff:
             ff.write(imagebinary)
-        self.checkempty(["Port"])
+        self.checkempty("Port")
         self.port = self.config["Port"]
 
         absolute_img_path = os.path.abspath(fname)

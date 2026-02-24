@@ -249,7 +249,7 @@ class TS(basetrans):
         gpt_dict = query.dictionary
         query: str = query.rawtext if self.is_version_new else query.parsedtext
 
-        self.checkempty(["API接口地址"])
+        self.checkempty("API接口地址")
         self.get_client(self.config["API接口地址"])
         frequency_penalty = float(self.config["frequency_penalty"])
 

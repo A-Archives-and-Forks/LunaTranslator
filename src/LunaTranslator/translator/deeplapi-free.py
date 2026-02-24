@@ -19,11 +19,11 @@ class TS(basetrans):
 
     def translate(self, query):
         if self.config["usewhich"] == 0:
-            self.checkempty(["DeepL-Auth-Key"])
+            self.checkempty("DeepL-Auth-Key")
             appid = self.multiapikeycurrent["DeepL-Auth-Key"]
             endpoint = "https://api-free.deepl.com/v2/translate"
         elif self.config["usewhich"] == 1:
-            self.checkempty(["DeepL-Auth-Key-2"])
+            self.checkempty("DeepL-Auth-Key-2")
             appid = self.multiapikeycurrent["DeepL-Auth-Key-2"]
             endpoint = "https://api.deepl.com/v2/translate"
 
