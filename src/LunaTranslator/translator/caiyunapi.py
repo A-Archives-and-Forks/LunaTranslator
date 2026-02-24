@@ -7,7 +7,7 @@ class TS(basetrans):
         return {Languages.TradChinese: "zh-Hant"}
 
     def translate(self, query):
-        self.checkempty(["Token"])
+        self.checkempty("Token")
 
         token = self.multiapikeycurrent["Token"]
 

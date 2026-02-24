@@ -5,7 +5,7 @@ class TS(basetrans):
     needzhconv = True
 
     def translate(self, content):
-        self.checkempty(["key"])
+        self.checkempty("key")
 
         key = self.multiapikeycurrent["key"]
 

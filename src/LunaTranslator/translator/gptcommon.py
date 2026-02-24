@@ -253,9 +253,7 @@ def createheaders(apiurl: str, curkey: str, maybeuse: dict, proxy, extra):
 class gptcommon(basetrans):
     @property
     def apiurl(self) -> str:
-        return self.config.get(
-            "API接口地址", self.config.get("OPENAI_API_BASE", "")
-        ).strip()
+        return self.config.get("API接口地址", "").strip()
 
     def langmap(self):
         return Languages.createenglishlangmap()

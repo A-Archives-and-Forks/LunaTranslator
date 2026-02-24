@@ -13,8 +13,7 @@ class TS(basetrans):
         return {Languages.TradChinese: "zh-tw"}
 
     def translate(self, query):
-        self.checkempty(["Access_Key"])
-        self.checkempty(["SECRET_KEY"])
+        self.checkempty(["Access_Key", "SECRET_KEY"])
         access_key_id = self.multiapikeycurrent["Access_Key"]
         access_key_secret = self.multiapikeycurrent["SECRET_KEY"]
         url = "http://mt.cn-hangzhou.aliyuncs.com/api/translate/web/general"

@@ -76,7 +76,7 @@ class TS(basetrans):
             return self.devtool.translate(translateText)
 
     def translate_via_deeplx(self, query):
-        self.checkempty(["api"])
+        self.checkempty("api")
         payload = {
             "text": query,
             "source_lang": self.srclang,

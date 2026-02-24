@@ -8,7 +8,7 @@ class TS(basetrans):
         return {Languages.Chinese: "zh-CN", Languages.TradChinese: "zh-TW"}
 
     def translate(self, query):
-        self.checkempty(["key"])
+        self.checkempty("key")
 
         key = self.multiapikeycurrent["key"]
         params = {
