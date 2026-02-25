@@ -82,7 +82,7 @@ class TTS(TTSbase):
             return fallback_versions
 
     def getvoicelist_gsvi(self) -> "tuple[list[str], list[str]]":
-        base_url = self.config["URL"]
+        base_url = self.config["URL2"]
         supported_versions = self.get_supported_versions(base_url)
 
         all_display_names = []
