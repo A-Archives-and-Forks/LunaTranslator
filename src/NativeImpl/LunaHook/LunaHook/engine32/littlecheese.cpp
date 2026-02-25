@@ -1,6 +1,6 @@
 ﻿#include "littlecheese.h"
 
-bool littlecheese::attach_function()
+bool littlecheeseattach_function()
 {
     // 黒と金の開かない鍵
     /*if ( a3 == 33088 )
@@ -31,5 +31,43 @@ bool littlecheese::attach_function()
         hp.split = regoffset(edx);
         hp.type = USING_CHAR | CODEC_ANSI_BE | NO_CONTEXT | USING_SPLIT;
     }
-    return NewHook(hp, "littlecheese");
+    return NewHookRetry(hp, "littlecheese");
+}
+
+bool Rufattach_function()
+{
+    const BYTE bytes[] = {
+        // 奴隷市場Renaissance
+        0x81, XX, 0x00, 0x01, 0x00, 0x00,
+        0x8B, 0xF0,
+        0x76, 0x07,
+        0x81, 0x6D, 0xF4, 0x00, 0x80, 0x00, 0x00};
+    const BYTE bytes2[] = {
+        // セイレムの魔女たち
+        0x81, XX, 0x00, 0x01, 0x00, 0x00,
+        0x76, 0x07,
+        0x81, 0x6D, 0xF4, 0x00, 0x80, 0x00, 0x00};
+    auto addr = MemDbg::findBytes(bytes, sizeof(bytes), processStartAddress, processStopAddress);
+    if (!addr)
+        addr = MemDbg::findBytes(bytes2, sizeof(bytes2), processStartAddress, processStopAddress);
+    if (!addr)
+        return false;
+    addr = findfuncstart(addr);
+    if (!addr)
+        return false;
+    HookParam hp;
+    hp.address = addr;
+    hp.offset = regoffset(edx);
+    hp.type |= CODEC_ANSI_BE;
+    return NewHookRetry(hp, "Ruf");
+}
+bool littlecheese::attach_function()
+{
+    auto _ = littlecheeseattach_function();
+    auto fs = {L"*.arc", L"*.scb"};
+    if (std::all_of(fs.begin(), fs.end(), Util::CheckFile) && (Util::CheckFile(L"*.wsm") || GetModuleHandle(L"Kagura.dll")))
+    {
+        _ |= Rufattach_function();
+    }
+    return _;
 }
