@@ -519,7 +519,11 @@
         });
 
         // 如果页面高度变了，调整 SVG 高度
-        svg.style.height = document.body.scrollHeight + 'px';
+        let root = document.getElementById('luna_root_div')
+        const computedStyle = window.getComputedStyle(document.body);
+        let h = root.offsetHeight + root.offsetTop;
+        h += parseFloat(computedStyle.marginBottom)//+parseFloat(computedStyle.marginTop) 
+        svg.style.height = h + 'px';//document.body.scrollHeight + 'px';
     }
     var allowclickword = false
     function sethovercolor(color) {
