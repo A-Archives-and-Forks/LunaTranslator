@@ -2637,6 +2637,8 @@ static const emfuncinfoX emfunctionhooks_1[] = {
     {0x356FB0, {DIRECT_READ | CODEC_UTF8, 0, 0, 0, SLPS25662, "SLPS-25662"}},
     // 今日からマ王！ 眞マ国の休日
     {0x3428D0, {DIRECT_READ | CODEC_UTF8, 0, 0, 0, SLPS25801, "SLPS-25801"}},
+    // 遙かなる時空の中で 舞一夜
+    {0x1c04ec, {USING_CHAR | DATA_INDIRECT, PCSX2_REG_OFFSET(a3), 0, 0, FSLPM66127, "SLPM-66548"}},
     // 遙かなる時空の中で3
     {0x24CAE8, {USING_CHAR | DATA_INDIRECT, PCSX2_REG_OFFSET(t7), 0, 0, FSLPM66127, std::vector<const char *>{"SLPM-65834", "SLPM-65849", "SLPM-65850"}}},
     {0x24CA50, {0, PCSX2_REG_OFFSET(a1), 0, SLPM66127X, FSLPM66127, std::vector<const char *>{"SLPM-65834", "SLPM-65849", "SLPM-65850"}}},
