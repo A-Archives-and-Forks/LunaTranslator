@@ -1151,7 +1151,7 @@
             "name": "GPT-SoVITS",
             "type": "offline",
             "args": {
-                "APITYPE": "gptsovits",
+                "APITYPE": "gsvi",
                 "URL": "http://127.0.0.1:9880",
                 "link1": "https://github.com/RVC-Boss/GPT-SoVITS",
                 "link2": "https://github.com/AI-Hobbyist/GPT-SoVITS-Inference",

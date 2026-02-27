@@ -29,10 +29,11 @@ class TTS(TTSbase):
             return self.speak_gsvi(content, voice, speed_facter)
 
     def speak_gptsovits(self, content, voice, speed):
-        query = dict(text=content, streaming_mode=True)
+        query = dict(text=content)
         if self.config["apiv"] == "v2":
             url = urlpathjoin(self.config["URL"], "tts")
             query.update(text_lang=self.srclang, speed_factor=speed)
+            # , streaming_mode=True)
         else:
             url = self.config["URL"]
             query.update(text_language=self.srclang, speed=speed)
