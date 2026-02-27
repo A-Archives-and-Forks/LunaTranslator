@@ -40,6 +40,7 @@
 #include "engine32/mirage.h"
 #include "engine32/RScript.h"
 #include "engine32/Sprite.h"
+#include "engine32/PinkQuestion.h"
 #include "engine32/Nekotaro.h"
 #include "engine32/PONScripter.h"
 #include "engine32/Stronger.h"
@@ -483,5 +484,6 @@ std::vector<ENGINE *> check_engines()
         new GLuer,
         new ZeroEscape,
         new ANOS,
+        new PinkQuestion,
     };
 }
