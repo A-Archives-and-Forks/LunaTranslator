@@ -20,9 +20,9 @@ public:
             //[060127][エルフ] AVキング (mdf+mds)
             auto avking = {L"*.scx", L"data/cg/cg.bin", L"data/cg/cg.pak", L"data/cg/hiz/*.hiz"};
             if (std::all_of(paks.begin(), paks.end(), [](auto f)
-                            { return Util::CheckFile_exits(f); }) &&
+                            { return Util::CheckFileEx(f); }) &&
                 std::any_of(paks2.begin(), paks2.end(), [](auto f)
-                            { return Util::CheckFile_exits(f); }))
+                            { return Util::CheckFileEx(f); }))
                 type = 1;
             else if (std::all_of(avking.begin(), avking.end(), Util::CheckFile))
                 type = 2;
@@ -44,7 +44,7 @@ public:
         check_by_target = []()
         {
             // check_by_list{L"data.arc",L"Ai5win.exe",L"mes.arc"};
-            return Util::CheckFile_exits(L"Ai5win.exe") && (Util::CheckFile_exits(L"data.arc") || Util::CheckFile_exits(L"MISC\\data.arc")) && (Util::CheckFile_exits(L"mes.arc") || Util::CheckFile_exits(L"MISC\\mes.arc"));
+            return Util::CheckFileEx(L"Ai5win.exe") && (Util::CheckFileEx(L"data.arc") || Util::CheckFileEx(L"MISC\\data.arc")) && (Util::CheckFileEx(L"mes.arc") || Util::CheckFileEx(L"MISC\\mes.arc"));
         };
     };
     bool attach_function();
