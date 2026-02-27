@@ -40,7 +40,7 @@ namespace Util
   DWORD FindImportEntry(DWORD hModule, DWORD fun);
 #endif
 
-  bool CheckFile_exits(LPCWSTR name, bool if_exits_also_ok = false);
+  bool CheckFileEx(LPCWSTR name, bool if_exits_also_ok = true);
   bool CheckFile(LPCWSTR name);
 
   bool SearchResourceString(LPCWSTR str, HMODULE hModule = NULL);

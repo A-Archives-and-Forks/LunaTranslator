@@ -258,9 +258,9 @@ namespace Util
 
   bool CheckFile(LPCWSTR name)
   {
-    return CheckFile_exits(name, false);
+    return CheckFileEx(name, false);
   }
-  bool CheckFile_exits(LPCWSTR name, bool if_exits_also_ok)
+  bool CheckFileEx(LPCWSTR name, bool if_exits_also_ok)
   {
     WIN32_FIND_DATAW unused;
     HANDLE file = FindFirstFileW(name, &unused);
