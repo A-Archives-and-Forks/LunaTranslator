@@ -214,6 +214,42 @@ bool Mink2::attach_function()
   return found;
 }
 
+static bool MINK2()
+{
+  // 催眠学級
+  const BYTE pattern[] = {
+      0X80, 0XFB, 0X81,
+      XX4,
+      XX4,
+      XX4,
+      0x72, XX,
+      0X80, 0XFB, 0X9F,
+      0X76, XX,
+      0X8A, 0XCb,
+      0X80, 0xc1, 0X20,
+      0x80, 0xf9, 0x1c,
+      0X77, XX,
+      0X0F, 0XB6, XX,
+      0XC1, 0XE3, 0X08,
+      0X03, XX,
+      0x83, 0xc0, 0x01,
+      0X89, XX, 0X24, XX,
+      0X89, XX, 0X24, XX,
+      0XEB, 0X08};
+  auto addr = MemDbg::findBytes(pattern, sizeof(pattern), processStartAddress, processStopAddress);
+  if (!addr)
+    return false;
+  addr = MemDbg::findEnclosingAlignedFunction(addr);
+  if (!addr)
+    return false;
+  HookParam hp;
+  hp.address = addr;
+  hp.offset = stackoffset(4);
+  hp.split = stackoffset(8);
+  hp.type = USING_STRING | USING_SPLIT | FULL_STRING;
+  return NewHook(hp, "Mink2");
+}
+
 static bool MdePink()
 {
   // (18禁ゲーム) [100903][minkm_0012][M de Pink] しすたー・すきーむ2 アニメーション追加版 DL版
@@ -258,7 +294,7 @@ static bool MdePink()
 }
 bool Mink::attach_function()
 {
-  return MdePink() || InsertMinkHook();
+  return MdePink() || MINK2() || InsertMinkHook();
 }
 
 bool Mink3::attach_function()
