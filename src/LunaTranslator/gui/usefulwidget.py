@@ -3577,9 +3577,13 @@ class LinkLabel(QLabel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.color2 = gobject.Consts.linkcolor
-        self.color1 = self.palette().color(QPalette.ColorRole.Link).name()
         self.setOpenExternalLinks(True)
         self.linkHovered.connect(self.change_link_color)
+
+    def changeEvent(self, event: QEvent):
+        if event.type() == QEvent.Type.PaletteChange:
+            self.setText(self.text())
+        super().changeEvent(event)
 
     def setOpenExternalLinks(self, _):
         super().setOpenExternalLinks(_)
@@ -3590,8 +3594,22 @@ class LinkLabel(QLabel):
         self.setText(self.text())
         return super().leaveEvent(a0)
 
+    def average_colors_precise(self, color1: QColor, color2: QColor):
+        r = (color1.redF() * 2 + color2.redF()) / 3
+        g = (color1.greenF() * 2 + color2.greenF()) / 3
+        b = (color1.blueF() * 2 + color2.blueF()) / 3
+        a = (color1.alphaF() * 2 + color2.alphaF()) / 3
+
+        avg_color = QColor()
+        avg_color.setRgbF(r, g, b, a)
+        return avg_color
+
     def setText(self, t):
-        t = re.sub("<a(.*?)>", '<a\\1 style="color: {};">'.format(self.color1), t)
+        color1 = self.average_colors_precise(
+            self.palette().color(QPalette.ColorRole.Link),
+            self.palette().color(QPalette.ColorRole.Text),
+        ).name()
+        t = re.sub("<a(.*?)>", '<a\\1 style="color: {};">'.format(color1), t)
         super().setText(t)
 
     def change_link_color(self, link):
