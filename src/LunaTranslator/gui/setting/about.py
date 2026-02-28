@@ -342,7 +342,7 @@ def setTab_about(self: QWidget, basel):
                 dict(
                     name="aboutlayout",
                     parent=self,
-                    hiderows=[1, 2],
+                    hiderows=[2],
                     grid=[
                         ["UI语言", __delayloadlangs],
                         ["自动更新", functools.partial(updatexx, self)],
@@ -410,8 +410,4 @@ def setTab_about(self: QWidget, basel):
         functools.partial(
             _progresssignal4, self.aboutlayout.layout(), self.downloadprogress
         ),
-    )
-    gobject.base.connectsignal(
-        gobject.base.showupdatebtn,
-        lambda: self.aboutlayout.layout().setRowVisible(1, True),
     )
