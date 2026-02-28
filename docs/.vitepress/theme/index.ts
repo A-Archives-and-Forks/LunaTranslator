@@ -26,9 +26,9 @@ export default {
             document.querySelectorAll('.downloadlink').forEach((e) => {
                 e.addEventListener('click', () => {
                     let fuck = parseInt(window.localStorage.fuck)
-                    fuck = isNaN(fuck) ? 1 : (fuck + 1)
-                    window.localStorage.fuck = fuck
-                    if (fuck % 3 != 0) return
+                    let isfuck = isNaN(fuck)
+                    window.localStorage.fuck = 1
+                    if (!isfuck) return
                     function checkIfMobile() {
                         const userAgent = navigator.userAgent || navigator.vendor || window.opera;
                         return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
