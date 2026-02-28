@@ -1521,6 +1521,10 @@
                 }
             },
             "type": "offline"
+        },
+        "selfbuild": {
+            "use": false,
+            "name": "自定义"
         }
     },
     "force_rect": true,

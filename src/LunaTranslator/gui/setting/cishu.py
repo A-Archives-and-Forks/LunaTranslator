@@ -1,7 +1,7 @@
 from qtsymbols import *
 import functools, os
 import gobject
-from myutils.utils import splitocrtypes, dynamiccishuname
+from myutils.utils import splitocrtypes, dynamiccishuname, selectdebugfile
 from myutils.config import globalconfig, _TR
 from myutils.wrapper import Singleton
 from gui.inputdialog import autoinitdialog_items, autoinitdialog
@@ -9,7 +9,6 @@ from gui.rcdownload import resourcewidget, resourcewidget2
 from gui.usefulwidget import (
     LGroupBox,
     VisLFormLayout,
-    MySwitch,
     makescrollgrid,
     D_getsimpleswitch,
     listediter,
@@ -170,6 +169,13 @@ def initinternal(self, names):
 
             line += [
                 D_getIconButton(callback=functools.partial(__, cishu)),
+            ]
+        elif cishu == "selfbuild":
+            line += [
+                D_getIconButton(
+                    callback=lambda: selectdebugfile("selfbuild_cishu.py"),
+                    icon="fa.edit",
+                )
             ]
         else:
             line += [""]

@@ -41,9 +41,11 @@ class cishubase(commonbase):
     def init(self):
         pass
 
-    def search(self, word) -> str: ...
+    def search(self, word: str) -> str: 
+        ...
 
-    def getUrl(self, word) -> str: ...
+    def getUrl(self, word: str) -> str: 
+        ...
 
     def result_cache_key(self, word, sentence=None):
         return word, sentence, str(self.rawconfig)

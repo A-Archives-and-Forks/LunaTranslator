@@ -13,4 +13,5 @@ class TTS(TTSbase):
 
     def speak(
         self, content, voice, param: SpeechParam
-    ) -> "bytes|Response|TTSResult|types.GeneratorType": ...
+    ) -> "bytes|Response|TTSResult|types.GeneratorType": 
+        ...
