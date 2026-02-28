@@ -3577,7 +3577,7 @@ class LinkLabel(QLabel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.color2 = "#E91E63"
-        self.color1 = "blue"
+        self.color1 = self.palette().color(QPalette.ColorRole.Link).name()
         self.setOpenExternalLinks(True)
         self.linkHovered.connect(self.change_link_color)
 
