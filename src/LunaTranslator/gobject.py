@@ -64,6 +64,8 @@ istest = False
 
 
 class Consts:
+    linkcolor = "#E91E63"
+
     class btncolor:
         class light:
             class enabled:
