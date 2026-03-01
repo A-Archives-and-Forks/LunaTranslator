@@ -49,3 +49,4 @@ src/cpp/LunaHook/LunaHook/engine32/Leaf.md
 
 
 *.dll
+src/scripts/autocommit/llmapis.py
